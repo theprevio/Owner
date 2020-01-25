@@ -1,0 +1,1164 @@
+---
+swagger: "2.0"
+info:
+  title: "Owner API"
+  description: "API for connecting Previo PMS with owner system. Allowing download\
+    \ list of reservation for\n *     commission calculation, getting the list of\
+    \ owners and push the owner reservations."
+  contact:
+    name: "Previo API support"
+    url: "http://previo.cz"
+    email: "info@previo.cz"
+  version: "1.0.9"
+host: "api.previo.info"
+basePath: "/app"
+schemes:
+- "https"
+consumes:
+- "application/json"
+produces:
+- "application/json"
+paths:
+  /authentication/access-token:
+    get:
+      tags:
+      - "Authentication"
+      summary: "Return access and refresh token"
+      parameters:
+      - name: "X-Previo-Hotel-Id"
+        in: "header"
+        description: "Hotel ID in PMS"
+        required: true
+        type: "integer"
+        format: "int32"
+      - name: "Authorization"
+        in: "header"
+        description: "Supervisor authorization by access token"
+        required: true
+        type: "string"
+        format: "string"
+      - name: "Content-Type"
+        in: "header"
+        description: "Type of content"
+        required: true
+        type: "string"
+        format: "string"
+      - name: "X-Previo-App-ID"
+        in: "header"
+        description: "Application id. X-Previo-App-ID for Owner system is 4."
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        200:
+          description: "Authentication token"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Authentication"
+        500:
+          description: "Error occured"
+          schema:
+            $ref: "#/definitions/Error"
+      security:
+      - auth: []
+  /authentication/refresh-token:
+    get:
+      tags:
+      - "Authentication"
+      summary: "Restore token expiration"
+      parameters:
+      - name: "X-Previo-Hotel-Id"
+        in: "header"
+        description: "Hotel ID in PMS"
+        required: true
+        type: "integer"
+        format: "int32"
+      - name: "Authorization"
+        in: "header"
+        description: "Authorization by access token"
+        required: true
+        type: "string"
+        format: "string"
+      - name: "Content-Type"
+        in: "header"
+        description: "Type of content"
+        required: true
+        type: "string"
+        format: "string"
+      - name: "X-Previo-App-ID"
+        in: "header"
+        description: "Application id. X-Previo-App-ID for Owner system is 4."
+        required: true
+        type: "integer"
+        format: "int32"
+      - name: "refreshToken"
+        in: "query"
+        description: "Refresh token"
+        required: true
+        type: "string"
+        format: "string"
+      responses:
+        200:
+          description: "Token has been restored"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/SuccessfulRequest"
+        400:
+          description: "Refresh token does not exist"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Error"
+        500:
+          description: "Error occured"
+          schema:
+            $ref: "#/definitions/Error"
+      security:
+      - auth: []
+  /authentication/is-token-valid:
+    get:
+      tags:
+      - "Authentication"
+      summary: "Check if is access token valid"
+      parameters:
+      - name: "X-Previo-Hotel-Id"
+        in: "header"
+        description: "Hotel ID in PMS"
+        required: true
+        type: "integer"
+        format: "int32"
+      - name: "Authorization"
+        in: "header"
+        description: "Authorization by access token"
+        required: true
+        type: "string"
+        format: "string"
+      - name: "Content-Type"
+        in: "header"
+        description: "Type of content"
+        required: true
+        type: "string"
+        format: "string"
+      - name: "X-Previo-App-ID"
+        in: "header"
+        description: "Application id. X-Previo-App-ID for Owner system is 4."
+        required: true
+        type: "integer"
+        format: "int32"
+      - name: "administrator"
+        in: "query"
+        description: "Boolean parameter. Value true check if is valid administrator\
+          \ access token. Value false check if is valid owner access token"
+        required: false
+        type: "boolean"
+        format: "boolean"
+      responses:
+        200:
+          description: "Token is valid"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/SuccessfulRequest"
+        401:
+          description: "Authentication token expired"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Error"
+        400:
+          description: "Authentication token does not exist"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Error"
+        500:
+          description: "Error occured"
+          schema:
+            $ref: "#/definitions/Error"
+      security:
+      - auth: []
+  /owner/owners:
+    get:
+      tags:
+      - "Owner"
+      summary: "List all owners"
+      operationId: "listOwners"
+      parameters:
+      - name: "X-Previo-Hotel-Id"
+        in: "header"
+        description: "Hotel ID in PMS"
+        required: true
+        type: "integer"
+        format: "int32"
+      - name: "Authorization"
+        in: "header"
+        description: "Authorization by access token"
+        required: true
+        type: "string"
+        format: "string"
+      - name: "Content-Type"
+        in: "header"
+        description: "Type of content"
+        required: true
+        type: "string"
+        format: "string"
+      - name: "X-Previo-App-ID"
+        in: "header"
+        description: "Application id. X-Previo-App-ID for Owner system is 4."
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        200:
+          description: "List of owners"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Owner"
+        400:
+          description: "Authentication token does not exist"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Error"
+        401:
+          description: "Authentication token expired"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Error"
+        500:
+          description: "Error occured"
+          schema:
+            $ref: "#/definitions/Error"
+      security:
+      - auth: []
+  /owner/owner:
+    get:
+      tags:
+      - "Owner"
+      summary: "Owner by id"
+      operationId: "owner"
+      parameters:
+      - name: "X-Previo-Hotel-Id"
+        in: "header"
+        description: "Hotel ID in PMS"
+        required: true
+        type: "integer"
+        format: "int32"
+      - name: "Authorization"
+        in: "header"
+        description: "Authorization by access token"
+        required: true
+        type: "string"
+        format: "string"
+      - name: "Content-Type"
+        in: "header"
+        description: "Type of content"
+        required: true
+        type: "string"
+        format: "string"
+      - name: "X-Previo-App-ID"
+        in: "header"
+        description: "Application id. X-Previo-App-ID for Owner system is 4."
+        required: true
+        type: "integer"
+        format: "int32"
+      - name: "ownerId"
+        in: "query"
+        description: "Owner id"
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        200:
+          description: "Owner"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Owner"
+        400:
+          description: "Authentication token does not exist"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Error"
+        401:
+          description: "Authentication token expired"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Error"
+        500:
+          description: "Error occured"
+          schema:
+            $ref: "#/definitions/Error"
+      security:
+      - auth: []
+  /owner/owner-categories:
+    get:
+      tags:
+      - "Owner"
+      summary: "List owner categories"
+      operationId: "listOwnersCategories"
+      parameters:
+      - name: "X-Previo-Hotel-Id"
+        in: "header"
+        description: "Hotel ID in PMS"
+        required: true
+        type: "integer"
+        format: "int32"
+      - name: "Authorization"
+        in: "header"
+        description: "Authorization by access token"
+        required: true
+        type: "string"
+        format: "string"
+      - name: "Content-Type"
+        in: "header"
+        description: "Type of content"
+        required: true
+        type: "string"
+        format: "string"
+      - name: "X-Previo-App-ID"
+        in: "header"
+        description: "Application id. X-Previo-App-ID for Owner system is 4."
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        200:
+          description: "List of categories"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/OwnerCategory"
+        400:
+          description: "Authentication token does not exist"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Error"
+        401:
+          description: "Authentication token expired"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Error"
+        500:
+          description: "Error occured"
+          schema:
+            $ref: "#/definitions/Error"
+      security:
+      - auth: []
+  /partner/hotel-partners:
+    get:
+      tags:
+      - "Partner"
+      summary: "List of partners"
+      operationId: "listPartners"
+      parameters:
+      - name: "X-Previo-Hotel-Id"
+        in: "header"
+        description: "Hotel ID in PMS"
+        required: true
+        type: "integer"
+        format: "int32"
+      - name: "Authorization"
+        in: "header"
+        description: "Authorization by access token"
+        required: true
+        type: "string"
+        format: "string"
+      - name: "Content-Type"
+        in: "header"
+        description: "Type of content"
+        required: true
+        type: "string"
+        format: "string"
+      - name: "X-Previo-App-ID"
+        in: "header"
+        description: "Application id. X-Previo-App-ID for Owner system is 4."
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        200:
+          description: "List of partners"
+          schema:
+            $ref: "#/definitions/HotelPartner"
+        400:
+          description: "Authentication token does not exist"
+          schema:
+            $ref: "#/definitions/Error"
+        401:
+          description: "Authentication token expired"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Error occured"
+          schema:
+            $ref: "#/definitions/Error"
+      security:
+      - auth: []
+  /reservation/reservations:
+    get:
+      tags:
+      - "Reservation"
+      summary: "List reservations"
+      operationId: "listReservations"
+      parameters:
+      - name: "X-Previo-Hotel-Id"
+        in: "header"
+        description: "Hotel ID in PMS"
+        required: true
+        type: "integer"
+        format: "int32"
+      - name: "Authorization"
+        in: "header"
+        description: "Authorization by access token"
+        required: true
+        type: "string"
+        format: "string"
+      - name: "Content-Type"
+        in: "header"
+        description: "Type of content"
+        required: true
+        type: "string"
+        format: "string"
+      - name: "X-Previo-App-ID"
+        in: "header"
+        description: "Application id. X-Previo-App-ID for Owner system is 4."
+        required: true
+        type: "integer"
+        format: "int32"
+      - name: "roomId"
+        in: "query"
+        description: "Return only reservations for certain room"
+        required: false
+        type: "integer"
+      - name: "roomTypeId"
+        in: "query"
+        description: "Return only reservations for certain room type ID"
+        required: false
+        type: "integer"
+      - name: "from"
+        in: "query"
+        description: "From filter (format 'Y-m-d\\TH:i:s\\Z')"
+        required: true
+        type: "string"
+        format: "date"
+      - name: "to"
+        in: "query"
+        description: "To filter (format 'Y-m-d\\TH:i:s\\Z')"
+        required: true
+        type: "string"
+        format: "date"
+      responses:
+        200:
+          description: "List of reservations"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Reservation"
+        400:
+          description: "Authentication token does not exist"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Error"
+        401:
+          description: "Authentication token expired"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Error"
+        500:
+          description: "Error occured"
+          schema:
+            $ref: "#/definitions/Error"
+      security:
+      - auth: []
+  /reservation/is-room-occupied:
+    get:
+      tags:
+      - "Reservation"
+      summary: "Is room occupied"
+      parameters:
+      - name: "X-Previo-Hotel-Id"
+        in: "header"
+        description: "Hotel ID in PMS"
+        required: true
+        type: "integer"
+        format: "int32"
+      - name: "Authorization"
+        in: "header"
+        description: "Authorization by access token"
+        required: true
+        type: "string"
+        format: "string"
+      - name: "Content-Type"
+        in: "header"
+        description: "Type of content"
+        required: true
+        type: "string"
+        format: "string"
+      - name: "X-Previo-App-ID"
+        in: "header"
+        description: "Application id. X-Previo-App-ID for Owner system is 4."
+        required: true
+        type: "integer"
+        format: "int32"
+      - name: "roomId"
+        in: "query"
+        description: "Room Id"
+        required: true
+        type: "string"
+        format: "string"
+      - name: "from"
+        in: "query"
+        description: "From filter(format 'Y-m-d\\TH:i:s\\Z')"
+        required: true
+        type: "string"
+        format: "date"
+      - name: "to"
+        in: "query"
+        description: "To filter(format 'Y-m-d\\TH:i:s\\Z')"
+        required: true
+        type: "string"
+        format: "date"
+      responses:
+        200:
+          description: "The room is free"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/SuccessfulRequest"
+        400:
+          description: "Authentication token does not exist"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Error"
+        401:
+          description: "Authentication token expired"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Error"
+        406:
+          description: "The room is occupied"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Error"
+        500:
+          description: "Error occured"
+          schema:
+            $ref: "#/definitions/Error"
+      security:
+      - auth: []
+  /reservation:
+    post:
+      tags:
+      - "Reservation"
+      summary: "Create reservation"
+      parameters:
+      - name: "X-Previo-Hotel-Id"
+        in: "header"
+        description: "Hotel ID in PMS"
+        required: true
+        type: "integer"
+        format: "int32"
+      - name: "Authorization"
+        in: "header"
+        description: "Authorization by access token"
+        required: true
+        type: "string"
+        format: "string"
+      - name: "Content-Type"
+        in: "header"
+        description: "Type of content"
+        required: true
+        type: "string"
+        format: "string"
+      - name: "X-Previo-App-ID"
+        in: "header"
+        description: "Application id. X-Previo-App-ID for Owner system is 4."
+        required: true
+        type: "integer"
+        format: "int32"
+      - name: "reservation"
+        in: "body"
+        description: "Data for created reservation"
+        required: true
+        schema:
+            $ref: "#/definitions/CreateReservation"
+      responses:
+        200:
+          description: "The room is free"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/SuccessfulRequest"
+        400:
+          description: "Authentication token does not exist"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Error"
+        401:
+          description: "Authentication token expired"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Error"
+        406:
+          description: "The room is occupied"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Error"
+        500:
+          description: "Error occured"
+          schema:
+            $ref: "#/definitions/Error"
+      security:
+      - auth: []
+  /reservation/:
+    delete:
+      tags:
+      - "Reservation"
+      summary: "Delete reservation"
+      parameters:
+      - name: "X-Previo-Hotel-Id"
+        in: "header"
+        description: "Hotel ID in PMS"
+        required: true
+        type: "integer"
+        format: "int32"
+      - name: "Authorization"
+        in: "header"
+        description: "Authorization by access token"
+        required: true
+        type: "string"
+        format: "string"
+      - name: "Content-Type"
+        in: "header"
+        description: "Type of content"
+        required: true
+        type: "string"
+        format: "string"
+      - name: "X-Previo-App-ID"
+        in: "header"
+        description: "Application id. X-Previo-App-ID for Owner system is 4."
+        required: true
+        type: "integer"
+        format: "int32"
+      - name: "resId"
+        in: "query"
+        description: "Reservation id"
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        200:
+          description: "Reservation deleted"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/SuccessfulRequest"
+        400:
+          description: "Authentication token does not exist"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Error"
+        406:
+          description: "The room is occupied"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Error"
+        500:
+          description: "Error occured"
+          schema:
+            $ref: "#/definitions/Error"
+      security:
+      - auth: []
+  /system/currencies:
+    get:
+      tags:
+      - "System"
+      summary: "List all currencies"
+      operationId: "listCurrencies"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        description: "Authorization by access token"
+        required: true
+        type: "string"
+        format: "string"
+      - name: "Content-Type"
+        in: "header"
+        description: "Type of content"
+        required: true
+        type: "string"
+        format: "string"
+      - name: "X-Previo-App-ID"
+        in: "header"
+        description: "Application id. X-Previo-App-ID for Owner system is 4."
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        200:
+          description: "List of currencies"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Currency"
+        400:
+          description: "Authentication token does not exist"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Error"
+        401:
+          description: "Authentication token expired"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Error"
+        500:
+          description: "Error occured"
+          schema:
+            $ref: "#/definitions/Error"
+      security:
+      - auth: []
+  /system/countries:
+    get:
+      tags:
+      - "System"
+      summary: "List all countries"
+      operationId: "listCountries"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        description: "Authorization by access token"
+        required: true
+        type: "string"
+        format: "string"
+      - name: "Content-Type"
+        in: "header"
+        description: "Type of content"
+        required: true
+        type: "string"
+        format: "string"
+      - name: "X-Previo-App-ID"
+        in: "header"
+        description: "Application id. X-Previo-App-ID for Owner system is 4."
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        200:
+          description: "List of countries"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Currency"
+        400:
+          description: "Authentication token does not exist"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Error"
+        401:
+          description: "Authentication token expired"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Error"
+        500:
+          description: "Error occured"
+          schema:
+            $ref: "#/definitions/Error"
+      security:
+      - auth: []
+  /system/reservation-statuses:
+    get:
+      tags:
+      - "System"
+      summary: "List reservation statuses"
+      operationId: "listReservationStatuses"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        description: "Authorization by access token"
+        required: true
+        type: "string"
+        format: "string"
+      - name: "Content-Type"
+        in: "header"
+        description: "Type of content"
+        required: true
+        type: "string"
+        format: "string"
+      - name: "X-Previo-App-ID"
+        in: "header"
+        description: "Application id. X-Previo-App-ID for Owner system is 4."
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        200:
+          description: "List of reservation statuses"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ReservationStatus"
+        400:
+          description: "Authentication token does not exist"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Error"
+        401:
+          description: "Authentication token expired"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Error"
+        500:
+          description: "Error occured"
+          schema:
+            $ref: "#/definitions/Error"
+      security:
+      - auth: []
+  /system/account-item-types:
+    get:
+      tags:
+      - "System"
+      summary: "List account item types"
+      operationId: "listAccountItemTypes"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        description: "Authorization by access token"
+        required: true
+        type: "string"
+        format: "string"
+      - name: "Content-Type"
+        in: "header"
+        description: "Type of content"
+        required: true
+        type: "string"
+        format: "string"
+      - name: "X-Previo-App-ID"
+        in: "header"
+        description: "Application id. X-Previo-App-ID for Owner system is 4."
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        200:
+          description: "List of account item types"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/AccountItemType"
+        400:
+          description: "Authentication token does not exist"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Error"
+        401:
+          description: "Authentication token expired"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Error"
+        500:
+          description: "Error occured"
+          schema:
+            $ref: "#/definitions/Error"
+      security:
+      - auth: []
+definitions:
+  Error:
+    required:
+    - "code"
+    - "message"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      message:
+        type: "string"
+  AccountItemType:
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+      name:
+        type: "string"
+        format: "string"
+    type: "object"
+  AccountItem:
+    properties:
+      typeId:
+        description: "cos_id"
+        type: "integer"
+        format: "int32"
+      name:
+        type: "string"
+        format: "string"
+      price:
+        description: "Price with VAT per unit"
+        type: "number"
+        format: "float"
+      quantity:
+        type: "integer"
+        format: "int32"
+      vatRate:
+        type: "number"
+        format: "float"
+    type: "object"
+  Authentication:
+    properties:
+      accessToken:
+        type: "string"
+        format: "string"
+      tokenType:
+        type: "string"
+        format: "string"
+      refreshToken:
+        type: "string"
+        format: "string"
+    type: "object"
+  Company:
+    properties:
+      partnerId:
+        description: "Partner ID"
+        type: "integer"
+        format: "int32"
+      partnerName:
+        type: "string"
+        format: "string"
+      previoPartnerId:
+        description: "Previo partner ID"
+        type: "integer"
+        format: "int32"
+      previoPartnerName:
+        type: "string"
+        format: "string"
+    type: "object"
+  Currency:
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+      code:
+        type: "string"
+        format: "string"
+      symbol:
+        type: "string"
+        format: "string"
+    type: "object"
+  Countries:
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+      name:
+        type: "string"
+        format: "string"
+    type: "object"  
+  HotelPartner:
+    properties:
+      partners:
+        description: "[]"
+        $ref: "#/definitions/Partner"
+      previoPartners:
+        description: "[]"
+        $ref: "#/definitions/PrevioPartner"
+    type: "object"
+  Owner:
+    required:
+    - "id"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+      name:
+        type: "string"
+        format: "string"
+      mail:
+        type: "string"
+        format: "string"
+      phone:
+        type: "string"
+        format: "string"
+      countryId:
+        type: "integer"
+        format: "int32"
+      ico:
+        type: "string"
+        format: "string"
+      dic:
+        type: "string"
+        format: "string"
+      ident:
+        type: "string"
+        format: "string"
+      street:
+        type: "string"
+        format: "string"
+      streetNumber:
+        type: "string"
+        format: "string"
+      city:
+        type: "string"
+        format: "string"
+      zip:
+        type: "string"
+        format: "string"
+      rooms:
+        type: "array"
+        items:
+          $ref: "#/definitions/Room"
+    type: "object"
+  OwnerCategory:
+    required:
+    - "id"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+      name:
+        type: "string"
+        format: "string"
+    type: "object"
+  Partner:
+    required:
+    - "id"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+      name:
+        type: "string"
+        format: "string"
+    type: "object"
+  PrevioPartner:
+    required:
+    - "id"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+      name:
+        type: "string"
+        format: "string"
+    type: "object"
+  ReservationStatus:
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+      name:
+        type: "string"
+        format: "string"
+    type: "object"
+  Reservation:
+    properties:
+      reservationId:
+        type: "integer"
+        format: "int32"
+      commissionId:
+        type: "integer"
+        format: "int32"
+      from:
+        type: "string"
+        format: "date"
+      to:
+        type: "string"
+        format: "date"
+      voucher:
+        type: "string"
+        format: "string"
+      guestCount:
+        type: "integer"
+        format: "int32"
+      statusId:
+        description: "Status ID in Previo PMS"
+        type: "integer"
+        format: "int32"
+      exchangeRate:
+        type: "number"
+        format: "float"
+      currencyId:
+        type: "integer"
+        format: "int32"
+      accountItems:
+        description: "[]"
+        type: "array"
+        items:
+          $ref: "#/definitions/AccountItem"
+      room:
+        $ref: "#/definitions/Room"
+      company:
+        $ref: "#/definitions/Company"
+    type: "object"
+  Room:
+    properties:
+      roomId:
+        type: "integer"
+        format: "int32"
+      roomTypeId:
+        type: "integer"
+        format: "int32"
+      roomName:
+        type: "string"
+        format: "string"
+      roomTypeName:
+        type: "string"
+        format: "string"
+    type: "object"
+  CreateReservation:
+    properties:
+      roomId:
+        type: "integer"
+        format: "int32"
+        example: 618286
+      from:
+        type: "string"
+        format: "string"
+        example: '2019-06-27T10:59:00Z'
+      to:
+        type: "string"
+        format: "string"
+        example: '2019-06-27T10:59:00Z'
+      ownerId:
+        type: "integer"
+        format: "int32"
+        example: 691968
+    type: "object"
+  SuccessfulRequest:
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      message:
+        type: "string"
+        format: "string"
+    type: "object"
+securityDefinitions:
+  auth:
+    type: "apiKey"
+    name: "Authorization"
+    in: "header"
