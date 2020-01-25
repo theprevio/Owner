@@ -198,13 +198,14 @@ The parameters that are needed to be sent for this type of authentication are as
 
     + Attributes (Error)
 
+### Get owner categories [GET /owner-categories]
 
++ Request (application/json)
+    + Headers
 
-
-## Owner Owner Categories [/owner/owner-categories]
-
-### listOwnersCategories [GET]
-List owner categories
+            X-Previo-Hotel-Id: 730111 (Hotel ID in PMS)
+            X-Previo-App-ID: 4 (Application id. X-Previo-App-ID for Owner system is 4.)
+            Authorization: (Authorization by access token)
 
 + Response 200 (application/json)
 
@@ -237,15 +238,15 @@ List owner categories
     + Attributes (Error)
 
 
+## Partner [/partner/hotel-partners]
 
+### Get list of partners [GET]
++ Request (application/json)
+    + Headers
 
-
-# Group Partner
-
-## Partner Hotel Partners [/partner/hotel-partners]
-
-### listPartners [GET]
-List of partners
+            X-Previo-Hotel-Id: 730111 (Hotel ID in PMS)
+            X-Previo-App-ID: 4 (Application id. X-Previo-App-ID for Owner system is 4.)
+            Authorization: (Authorization by access token)
 
 + Response 200 (application/json)
 
@@ -278,15 +279,17 @@ List of partners
     + Attributes (Error)
 
 
+## Reservation [/reservation]
 
+### Get list of reservations [GET /reservations{?roomId,roomTypeId,from,to}]
 
++ Request (application/json)
+    + Headers
 
-# Group Reservation
-
-## Reservation Reservations [/reservation/reservations{?roomId,roomTypeId,from,to}]
-
-### listReservations [GET]
-List reservations
+            X-Previo-Hotel-Id: 730111 (Hotel ID in PMS)
+            X-Previo-App-ID: 4 (Application id. X-Previo-App-ID for Owner system is 4.)
+            Authorization: (Authorization by access token)
+            
 + Parameters
     + roomId (number, optional)
 
@@ -336,12 +339,15 @@ List reservations
     + Attributes (Error)
 
 
+### Get room occupancy [GET /is-room-occupied{?roomId,from,to}]
 
++ Request (application/json)
+    + Headers
 
-## Reservation Is Room Occupied [/reservation/is-room-occupied{?roomId,from,to}]
-
-### Is room occupied [GET]
-Is room occupied
+            X-Previo-Hotel-Id: 730111 (Hotel ID in PMS)
+            X-Previo-App-ID: 4 (Application id. X-Previo-App-ID for Owner system is 4.)
+            Authorization: (Authorization by access token)
+            
 + Parameters
     + roomId (string, required)
 
@@ -395,14 +401,15 @@ Is room occupied
     + Attributes (Error)
 
 
-
-
-## Reservation [/reservation]
-
 ### Create reservation [POST]
-Create reservation
 
 + Request (application/json)
+    + Headers
+
+            X-Previo-Hotel-Id: 730111 (Hotel ID in PMS)
+            X-Previo-App-ID: 4 (Application id. X-Previo-App-ID for Owner system is 4.)
+            Authorization: (Authorization by access token)
+            
 
     + Attributes (CreateReservation)
 
@@ -446,13 +453,15 @@ Create reservation
 
     + Attributes (Error)
 
+### Delete reservation [DELETE /{?resId}]
 
++ Request (application/json)
+    + Headers
 
-
-## Reservation [/reservation/{?resId}]
-
-### Delete reservation [DELETE]
-Delete reservation
+            X-Previo-Hotel-Id: 730111 (Hotel ID in PMS)
+            X-Previo-App-ID: 4 (Application id. X-Previo-App-ID for Owner system is 4.)
+            Authorization: (Authorization by access token)
+            
 + Parameters
     + resId (number, required)
 
