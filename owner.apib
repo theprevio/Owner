@@ -1,0 +1,815 @@
+FORMAT: 1A
+HOST: https://api.previo.info/app
+
+# Owner API
+API for connecting Previo PMS with owner system. Allowing download list of reservation for
+ *     commission calculation, getting the list of owners and push the owner reservations.
+
+## Authentication
+This API uses Custom Header for its authentication.
+
+The parameters that are needed to be sent for this type of authentication are as follows:
++ `Authorization`
+
+# Group Authentication
+
+## Authentication Access Token [/authentication/access-token]
+
+### Return access and refresh token [GET]
+Return access and refresh token
+
++ Response 200 (application/json)
+
+        Authentication token
+
+    + Attributes (array[Authentication])
+
+
+
++ Response 500 (application/json)
+
+        Error occured
+
+    + Attributes (Error)
+
+
+
+
+## Authentication Refresh Token [/authentication/refresh-token{?refreshToken}]
+
+### Restore token expiration [GET]
+Restore token expiration
++ Parameters
+    + refreshToken (string, required)
+
+        Refresh token
+
+
++ Response 200 (application/json)
+
+        Token has been restored
+
+    + Attributes (array[SuccessfulRequest])
+
+
+
++ Response 400 (application/json)
+
+        Refresh token does not exist
+
+    + Attributes (Error)
+
+
+
++ Response 500 (application/json)
+
+        Error occured
+
+    + Attributes (Error)
+
+
+
+
+## Authentication Is Token Valid [/authentication/is-token-valid{?administrator}]
+
+### Check if is access token valid [GET]
+Check if is access token valid
++ Parameters
+    + administrator (boolean, optional)
+
+        Boolean parameter. Value true check if is valid administrator access token. Value false check if is valid owner access token
+
+
++ Response 200 (application/json)
+
+        Token is valid
+
+    + Attributes (array[SuccessfulRequest])
+
+
+
++ Response 400 (application/json)
+
+        Authentication token does not exist
+
+    + Attributes (Error)
+
+
+
++ Response 401 (application/json)
+
+        Authentication token expired
+
+    + Attributes (Error)
+
+
+
++ Response 500 (application/json)
+
+        Error occured
+
+    + Attributes (Error)
+
+
+
+
+
+# Group Owner
+
+## Owner Owners [/owner/owners]
+
+### listOwners [GET]
+List all owners
+
++ Response 200 (application/json)
+
+        List of owners
+
+    + Attributes (array[Owner])
+
+
+
++ Response 400 (application/json)
+
+        Authentication token does not exist
+
+    + Attributes (Error)
+
+
+
++ Response 401 (application/json)
+
+        Authentication token expired
+
+    + Attributes (Error)
+
+
+
++ Response 500 (application/json)
+
+        Error occured
+
+    + Attributes (Error)
+
+
+
+
+## Owner Owner [/owner/owner{?ownerId}]
+
+### owner [GET]
+Owner by id
++ Parameters
+    + ownerId (number, required)
+
+        Owner id
+
+
++ Response 200 (application/json)
+
+        Owner
+
+    + Attributes (array[Owner])
+
+
+
++ Response 400 (application/json)
+
+        Authentication token does not exist
+
+    + Attributes (Error)
+
+
+
++ Response 401 (application/json)
+
+        Authentication token expired
+
+    + Attributes (Error)
+
+
+
++ Response 500 (application/json)
+
+        Error occured
+
+    + Attributes (Error)
+
+
+
+
+## Owner Owner Categories [/owner/owner-categories]
+
+### listOwnersCategories [GET]
+List owner categories
+
++ Response 200 (application/json)
+
+        List of categories
+
+    + Attributes (array[OwnerCategory])
+
+
+
++ Response 400 (application/json)
+
+        Authentication token does not exist
+
+    + Attributes (Error)
+
+
+
++ Response 401 (application/json)
+
+        Authentication token expired
+
+    + Attributes (Error)
+
+
+
++ Response 500 (application/json)
+
+        Error occured
+
+    + Attributes (Error)
+
+
+
+
+
+# Group Partner
+
+## Partner Hotel Partners [/partner/hotel-partners]
+
+### listPartners [GET]
+List of partners
+
++ Response 200 (application/json)
+
+        List of partners
+
+    + Attributes (HotelPartner)
+
+
+
++ Response 400 (application/json)
+
+        Authentication token does not exist
+
+    + Attributes (Error)
+
+
+
++ Response 401 (application/json)
+
+        Authentication token expired
+
+    + Attributes (Error)
+
+
+
++ Response 500 (application/json)
+
+        Error occured
+
+    + Attributes (Error)
+
+
+
+
+
+# Group Reservation
+
+## Reservation Reservations [/reservation/reservations{?roomId,roomTypeId,from,to}]
+
+### listReservations [GET]
+List reservations
++ Parameters
+    + roomId (number, optional)
+
+        Return only reservations for certain room
+
+    + roomTypeId (number, optional)
+
+        Return only reservations for certain room type ID
+
+    + from (string, required)
+
+        From filter (format 'Y-m-d\TH:i:s\Z')
+
+    + to (string, required)
+
+        To filter (format 'Y-m-d\TH:i:s\Z')
+
+
++ Response 200 (application/json)
+
+        List of reservations
+
+    + Attributes (array[Reservation])
+
+
+
++ Response 400 (application/json)
+
+        Authentication token does not exist
+
+    + Attributes (Error)
+
+
+
++ Response 401 (application/json)
+
+        Authentication token expired
+
+    + Attributes (Error)
+
+
+
++ Response 500 (application/json)
+
+        Error occured
+
+    + Attributes (Error)
+
+
+
+
+## Reservation Is Room Occupied [/reservation/is-room-occupied{?roomId,from,to}]
+
+### Is room occupied [GET]
+Is room occupied
++ Parameters
+    + roomId (string, required)
+
+        Room Id
+
+    + from (string, required)
+
+        From filter(format 'Y-m-d\TH:i:s\Z')
+
+    + to (string, required)
+
+        To filter(format 'Y-m-d\TH:i:s\Z')
+
+
++ Response 200 (application/json)
+
+        The room is free
+
+    + Attributes (array[SuccessfulRequest])
+
+
+
++ Response 400 (application/json)
+
+        Authentication token does not exist
+
+    + Attributes (Error)
+
+
+
++ Response 401 (application/json)
+
+        Authentication token expired
+
+    + Attributes (Error)
+
+
+
++ Response 406 (application/json)
+
+        The room is occupied
+
+    + Attributes (Error)
+
+
+
++ Response 500 (application/json)
+
+        Error occured
+
+    + Attributes (Error)
+
+
+
+
+## Reservation [/reservation]
+
+### Create reservation [POST]
+Create reservation
+
++ Request (application/json)
+
+    + Attributes (CreateReservation)
+
+
+
++ Response 200 (application/json)
+
+        The room is free
+
+    + Attributes (array[SuccessfulRequest])
+
+
+
++ Response 400 (application/json)
+
+        Authentication token does not exist
+
+    + Attributes (Error)
+
+
+
++ Response 401 (application/json)
+
+        Authentication token expired
+
+    + Attributes (Error)
+
+
+
++ Response 406 (application/json)
+
+        The room is occupied
+
+    + Attributes (Error)
+
+
+
++ Response 500 (application/json)
+
+        Error occured
+
+    + Attributes (Error)
+
+
+
+
+## Reservation [/reservation/{?resId}]
+
+### Delete reservation [DELETE]
+Delete reservation
++ Parameters
+    + resId (number, required)
+
+        Reservation id
+
+
++ Response 200 (application/json)
+
+        Reservation deleted
+
+    + Attributes (array[SuccessfulRequest])
+
+
+
++ Response 400 (application/json)
+
+        Authentication token does not exist
+
+    + Attributes (Error)
+
+
+
++ Response 406 (application/json)
+
+        The room is occupied
+
+    + Attributes (Error)
+
+
+
++ Response 500 (application/json)
+
+        Error occured
+
+    + Attributes (Error)
+
+
+
+
+
+# Group System
+
+## System Currencies [/system/currencies]
+
+### listCurrencies [GET]
+List all currencies
+
++ Response 200 (application/json)
+
+        List of currencies
+
+    + Attributes (array[Currency])
+
+
+
++ Response 400 (application/json)
+
+        Authentication token does not exist
+
+    + Attributes (Error)
+
+
+
++ Response 401 (application/json)
+
+        Authentication token expired
+
+    + Attributes (Error)
+
+
+
++ Response 500 (application/json)
+
+        Error occured
+
+    + Attributes (Error)
+
+
+
+
+## System Countries [/system/countries]
+
+### listCountries [GET]
+List all countries
+
++ Response 200 (application/json)
+
+        List of countries
+
+    + Attributes (array[Currency])
+
+
+
++ Response 400 (application/json)
+
+        Authentication token does not exist
+
+    + Attributes (Error)
+
+
+
++ Response 401 (application/json)
+
+        Authentication token expired
+
+    + Attributes (Error)
+
+
+
++ Response 500 (application/json)
+
+        Error occured
+
+    + Attributes (Error)
+
+
+
+
+## System Reservation Statuses [/system/reservation-statuses]
+
+### listReservationStatuses [GET]
+List reservation statuses
+
++ Response 200 (application/json)
+
+        List of reservation statuses
+
+    + Attributes (array[ReservationStatus])
+
+
+
++ Response 400 (application/json)
+
+        Authentication token does not exist
+
+    + Attributes (Error)
+
+
+
++ Response 401 (application/json)
+
+        Authentication token expired
+
+    + Attributes (Error)
+
+
+
++ Response 500 (application/json)
+
+        Error occured
+
+    + Attributes (Error)
+
+
+
+
+## System Account Item Types [/system/account-item-types]
+
+### listAccountItemTypes [GET]
+List account item types
+
++ Response 200 (application/json)
+
+        List of account item types
+
+    + Attributes (array[AccountItemType])
+
+
+
++ Response 400 (application/json)
+
+        Authentication token does not exist
+
+    + Attributes (Error)
+
+
+
++ Response 401 (application/json)
+
+        Authentication token expired
+
+    + Attributes (Error)
+
+
+
++ Response 500 (application/json)
+
+        Error occured
+
+    + Attributes (Error)
+
+
+
+
+
+# Data Structures
+
+## Error (object)
+
+
+### Properties
++ `code` (number, required) 
++ `message` (string, required) 
+
+
+## AccountItemType (object)
+
+
+### Properties
++ `id` (number, optional) 
++ `name` (string, optional) 
+
+
+## AccountItem (object)
+
+
+### Properties
++ `typeId` (number, optional) - cos_id
++ `name` (string, optional) 
++ `price` (number, optional) - Price with VAT per unit
++ `quantity` (number, optional) 
++ `vatRate` (number, optional) 
+
+
+## Authentication (object)
+
+
+### Properties
++ `accessToken` (string, optional) 
++ `tokenType` (string, optional) 
++ `refreshToken` (string, optional) 
+
+
+## Company (object)
+
+
+### Properties
++ `partnerId` (number, optional) - Partner ID
++ `partnerName` (string, optional) 
++ `previoPartnerId` (number, optional) - Previo partner ID
++ `previoPartnerName` (string, optional) 
+
+
+## Currency (object)
+
+
+### Properties
++ `id` (number, optional) 
++ `code` (string, optional) 
++ `symbol` (string, optional) 
+
+
+## Countries (object)
+
+
+### Properties
++ `id` (number, optional) 
++ `name` (string, optional) 
+
+
+## HotelPartner (object)
+
+
+### Properties
++ `partners` (Partner, optional) 
++ `previoPartners` (PrevioPartner, optional) 
+
+
+## Owner (object)
+
+
+### Properties
++ `id` (number, required) 
++ `name` (string, optional) 
++ `mail` (string, optional) 
++ `phone` (string, optional) 
++ `countryId` (number, optional) 
++ `ico` (string, optional) 
++ `dic` (string, optional) 
++ `ident` (string, optional) 
++ `street` (string, optional) 
++ `streetNumber` (string, optional) 
++ `city` (string, optional) 
++ `zip` (string, optional) 
++ `rooms` (array[Room], optional) 
+
+
+## OwnerCategory (object)
+
+
+### Properties
++ `id` (number, required) 
++ `name` (string, optional) 
+
+
+## Partner (object)
+
+
+### Properties
++ `id` (number, required) 
++ `name` (string, optional) 
+
+
+## PrevioPartner (object)
+
+
+### Properties
++ `id` (number, required) 
++ `name` (string, optional) 
+
+
+## ReservationStatus (object)
+
+
+### Properties
++ `id` (number, optional) 
++ `name` (string, optional) 
+
+
+## Reservation (object)
+
+
+### Properties
++ `reservationId` (number, optional) 
++ `commissionId` (number, optional) 
++ `from` (string, optional) 
++ `to` (string, optional) 
++ `voucher` (string, optional) 
++ `guestCount` (number, optional) 
++ `statusId` (number, optional) - Status ID in Previo PMS
++ `exchangeRate` (number, optional) 
++ `currencyId` (number, optional) 
++ `accountItems` (array[AccountItem], optional) - []
++ `room` (Room, optional) 
++ `company` (Company, optional) 
+
+
+## Room (object)
+
+
+### Properties
++ `roomId` (number, optional) 
++ `roomTypeId` (number, optional) 
++ `roomName` (string, optional) 
++ `roomTypeName` (string, optional) 
+
+
+## CreateReservation (object)
+
+
+### Properties
++ `roomId`: `618286` (number, optional) 
++ `from`: `2019-06-27T10:59:00Z` (string, optional) 
++ `to`: `2019-06-27T10:59:00Z` (string, optional) 
++ `ownerId`: `691968` (number, optional) 
+
+
+## SuccessfulRequest (object)
+
+
+### Properties
++ `code` (number, optional) 
++ `message` (string, optional) 
+
