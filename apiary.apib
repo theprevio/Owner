@@ -67,6 +67,13 @@ The parameters that are needed to be sent for this type of authentication are as
     + Attributes (Error)
 
 ### Check access token validity [GET /is-token-valid{?administrator}]
++ Request (application/json)
+    + Headers
+
+            X-Previo-Hotel-Id: 730111 (Hotel ID in PMS)
+            X-Previo-App-ID: 4 (Application id. X-Previo-App-ID for Owner system is 4.)
+            Authorization: (Authorization by access token)
+
 + Parameters
     + administrator (boolean, optional)
 
@@ -104,16 +111,17 @@ The parameters that are needed to be sent for this type of authentication are as
     + Attributes (Error)
 
 
+## Owners [/owner]
 
+### Get List of owners [GET /owners]
 
++ Request (application/json)
+    + Headers
 
-# Group Owner
-
-## Owner Owners [/owner/owners]
-
-### listOwners [GET]
-List all owners
-
+            X-Previo-Hotel-Id: 730111 (Hotel ID in PMS)
+            X-Previo-App-ID: 4 (Application id. X-Previo-App-ID for Owner system is 4.)
+            Authorization: (Authorization by access token)
+            
 + Response 200 (application/json)
 
         List of owners
@@ -145,12 +153,15 @@ List all owners
     + Attributes (Error)
 
 
+### Get Owner by id [GET /owner{?ownerId}]
 
++ Request (application/json)
+    + Headers
 
-## Owner Owner [/owner/owner{?ownerId}]
-
-### owner [GET]
-Owner by id
+            X-Previo-Hotel-Id: 730111 (Hotel ID in PMS)
+            X-Previo-App-ID: 4 (Application id. X-Previo-App-ID for Owner system is 4.)
+            Authorization: (Authorization by access token)
+            
 + Parameters
     + ownerId (number, required)
 
@@ -714,19 +725,19 @@ List account item types
 
 
 ### Properties
-+ `id` (number, required) 
-+ `name` (string, optional) 
-+ `mail` (string, optional) 
-+ `phone` (string, optional) 
-+ `countryId` (number, optional) 
-+ `ico` (string, optional) 
-+ `dic` (string, optional) 
-+ `ident` (string, optional) 
-+ `street` (string, optional) 
-+ `streetNumber` (string, optional) 
-+ `city` (string, optional) 
-+ `zip` (string, optional) 
-+ `rooms` (array[Room], optional) 
++ id: 1 (number, required) 
++ name: Lukas (string, optional) 
++ mail: lukas@previo.cz (string, optional) 
++ phone: 28683464 (string, optional) 
++ countryId: 1 (number, optional) 
++ ico: 28642974 (string, optional) 
++ dic: 29742947 (string, optional) 
++ ident: 28542864 (string, optional) 
++ street: Kolbenova (string, optional) 
++ streetNumber: 801 (string, optional) 
++ city: Prague (string, optional) 
++ zip: 228332 (string, optional) 
++ rooms (array[Room], optional) 
 
 
 ## OwnerCategory (object)
@@ -783,10 +794,10 @@ List account item types
 
 
 ### Properties
-+ `roomId` (number, optional) 
-+ `roomTypeId` (number, optional) 
-+ `roomName` (string, optional) 
-+ `roomTypeName` (string, optional) 
++ roomId: 19443 (number, optional) 
++ roomTypeId: 282 (number, optional) 
++ roomName: 101 (string, optional) 
++ roomTypeName: Double (string, optional) 
 
 
 ## CreateReservation (object)
