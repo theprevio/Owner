@@ -498,16 +498,15 @@ The parameters that are needed to be sent for this type of authentication are as
 
     + Attributes (Error)
 
+## System [/system]
 
+### Get list of currencies [GET /currencies]
 
++ Request (application/json)
+    + Headers
 
-
-# Group System
-
-## System Currencies [/system/currencies]
-
-### listCurrencies [GET]
-List all currencies
+            X-Previo-Hotel-Id: 730111 (Hotel ID in PMS)
+            Authorization: (Authorization by access token)
 
 + Response 200 (application/json)
 
@@ -540,18 +539,19 @@ List all currencies
     + Attributes (Error)
 
 
+### Get list of countries [GET /countries]
 
++ Request (application/json)
+    + Headers
 
-## System Countries [/system/countries]
-
-### listCountries [GET]
-List all countries
+            X-Previo-Hotel-Id: 730111 (Hotel ID in PMS)
+            Authorization: (Authorization by access token)
 
 + Response 200 (application/json)
 
         List of countries
 
-    + Attributes (array[Currency])
+    + Attributes (array[Countries])
 
 
 
@@ -578,12 +578,13 @@ List all countries
     + Attributes (Error)
 
 
+### Get list of reservation statuses [GET /reservation-statuses]
 
++ Request (application/json)
+    + Headers
 
-## System Reservation Statuses [/system/reservation-statuses]
-
-### listReservationStatuses [GET]
-List reservation statuses
+            X-Previo-Hotel-Id: 730111 (Hotel ID in PMS)
+            Authorization: (Authorization by access token)
 
 + Response 200 (application/json)
 
@@ -616,12 +617,13 @@ List reservation statuses
     + Attributes (Error)
 
 
+### Get list of account item types [GET /account-item-types]
 
++ Request (application/json)
+    + Headers
 
-## System Account Item Types [/system/account-item-types]
-
-### listAccountItemTypes [GET]
-List account item types
+            X-Previo-Hotel-Id: 730111 (Hotel ID in PMS)
+            Authorization: (Authorization by access token)
 
 + Response 200 (application/json)
 
@@ -679,11 +681,11 @@ List account item types
 
 
 ### Properties
-+ `typeId` (number, optional) - cos_id
-+ `name` (string, optional) 
-+ `price` (number, optional) - Price with VAT per unit
-+ `quantity` (number, optional) 
-+ `vatRate` (number, optional) 
++ typeId: 1 (number, optional) - cos_id
++ name: accomodation (string, optional) 
++ price: 1000 (number, optional) - Price with VAT per unit
++ quantity: 1 (number, optional) 
++ vatRate: 15 (number, optional) 
 
 
 ## Authentication (object)
@@ -699,27 +701,26 @@ List account item types
 
 
 ### Properties
-+ `partnerId` (number, optional) - Partner ID
-+ `partnerName` (string, optional) 
-+ `previoPartnerId` (number, optional) - Previo partner ID
-+ `previoPartnerName` (string, optional) 
-
++ partnerId: 2242 (number, optional) - Partner ID
++ partnerName: Previo (string, optional) 
++ previoPartnerId: 244 (number, optional) - Previo partner ID
++ previoPartnerName: Booking (string, optional) 
 
 ## Currency (object)
 
 
 ### Properties
-+ `id` (number, optional) 
-+ `code` (string, optional) 
-+ `symbol` (string, optional) 
++ id: 1 (number, optional) 
++ code: Eur (string, optional) 
++ symbol: € (string, optional) 
 
 
 ## Countries (object)
 
 
 ### Properties
-+ `id` (number, optional) 
-+ `name` (string, optional) 
++ id: 1 (number, optional) 
++ name: Czech Republic (string, optional) 
 
 
 ## HotelPartner (object)
@@ -777,26 +778,26 @@ List account item types
 
 
 ### Properties
-+ `id` (number, optional) 
-+ `name` (string, optional) 
++ id: 1 (number, optional) 
++ name: Option (string, optional) 
 
 
 ## Reservation (object)
 
 
 ### Properties
-+ `reservationId` (number, optional) 
-+ `commissionId` (number, optional) 
-+ `from` (string, optional) 
-+ `to` (string, optional) 
-+ `voucher` (string, optional) 
-+ `guestCount` (number, optional) 
-+ `statusId` (number, optional) - Status ID in Previo PMS
-+ `exchangeRate` (number, optional) 
-+ `currencyId` (number, optional) 
-+ `accountItems` (array[AccountItem], optional) - []
-+ `room` (Room, optional) 
-+ `company` (Company, optional) 
++ reservationId: 2497492749 (number, optional) 
++ commissionId: 287642874 (number, optional) 
++ from: 2020-01-25 (string, optional) 
++ to: 2020-01-26 (string, optional) 
++ voucher: 2974294 (string, optional) 
++ guestCount: 2 (number, optional) 
++ statusId: 3 (number, optional) - Status ID in Previo PMS
++ exchangeRate: 25 (number, optional) 
++ currencyId: 2 (number, optional) 
++ accountItems (array[AccountItem], optional) - []
++ room (Room, optional) 
++ company: Previo (Company, optional) 
 
 
 ## Room (object)
