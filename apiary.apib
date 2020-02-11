@@ -66,7 +66,7 @@ The parameters that are needed to be sent for this type of authentication are as
 
     + Attributes (Error)
 
-### Check access token validity [GET /is-token-valid{?administrator}]
+### Check access token validity [GET /authentication/is-token-valid{?administrator}]
 + Request (application/json)
     + Headers
 
@@ -113,7 +113,7 @@ The parameters that are needed to be sent for this type of authentication are as
 
 ## Owners [/owner]
 
-### Get List of owners [GET /owners]
+### Get List of owners [GET /owner/owners]
 
 + Request (application/json)
     + Headers
@@ -153,7 +153,7 @@ The parameters that are needed to be sent for this type of authentication are as
     + Attributes (Error)
 
 
-### Get Owner by id [GET /owner{?ownerId}]
+### Get Owner by id [GET /owner/owner{?ownerId}]
 
 + Request (application/json)
     + Headers
@@ -198,7 +198,7 @@ The parameters that are needed to be sent for this type of authentication are as
 
     + Attributes (Error)
 
-### Get owner categories [GET /owner-categories]
+### Get owner categories [GET /owner/owner-categories]
 
 + Request (application/json)
     + Headers
@@ -281,7 +281,7 @@ The parameters that are needed to be sent for this type of authentication are as
 
 ## Reservation [/reservation]
 
-### Get list of reservations [GET /reservations{?roomId,roomTypeId,from,to}]
+### Get list of reservations [GET /reservation/reservations{?roomId,roomTypeId,from,to}]
 
 + Request (application/json)
     + Headers
@@ -339,7 +339,7 @@ The parameters that are needed to be sent for this type of authentication are as
     + Attributes (Error)
 
 
-### Get room occupancy [GET /is-room-occupied{?roomId,from,to}]
+### Get room occupancy [GET /reservation/is-room-occupied{?roomId,from,to}]
 
 + Request (application/json)
     + Headers
@@ -500,7 +500,7 @@ The parameters that are needed to be sent for this type of authentication are as
 
 ## System [/system]
 
-### Get list of currencies [GET /currencies]
+### Get list of currencies [GET /system/currencies]
 
 + Request (application/json)
     + Headers
@@ -539,7 +539,7 @@ The parameters that are needed to be sent for this type of authentication are as
     + Attributes (Error)
 
 
-### Get list of countries [GET /countries]
+### Get list of countries [GET /system/countries]
 
 + Request (application/json)
     + Headers
@@ -578,7 +578,7 @@ The parameters that are needed to be sent for this type of authentication are as
     + Attributes (Error)
 
 
-### Get list of reservation statuses [GET /reservation-statuses]
+### Get list of reservation statuses [GET /system/reservation-statuses]
 
 + Request (application/json)
     + Headers
@@ -617,7 +617,7 @@ The parameters that are needed to be sent for this type of authentication are as
     + Attributes (Error)
 
 
-### Get list of account item types [GET /account-item-types]
+### Get list of account item types [GET /system/account-item-types]
 
 + Request (application/json)
     + Headers
