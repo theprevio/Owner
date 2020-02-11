@@ -686,11 +686,11 @@ The parameters that are needed to be sent for this type of authentication are as
 + price: 1000 (number, optional) - Price with VAT per unit
 + quantity: 1 (number, optional) 
 + vatRate: 15 (number, optional)
-+ stockId: 256889
-+ packageId: null
-+ serviceId: null
-+ currencyId: 1
-+ exchangeRate: 1
++ stockId: 256889 (number, optional)
++ packageId: 56565 (number, optional)
++ serviceId: 5656999 (number, optional)
++ currencyId: 1 (number, optional)
++ exchangeRate: 1 (number, optional)
 
 
 ## Authentication (object)
@@ -798,12 +798,11 @@ The parameters that are needed to be sent for this type of authentication are as
 + voucher: 2974294 (string, optional) 
 + guestCount: 2 (number, optional) 
 + statusId: 3 (number, optional) - Status ID in Previo PMS
-+ exchangeRate: 25 (number, optional) 
-+ currencyId: 2 (number, optional) 
 + accountItems (array[AccountItem], optional) - []
 + room (Room, optional) 
 + company: Previo (Company, optional) 
-
++ isLocked: true  (boolean, optional)
++ guestsCountWithoutBed: 2  (number, optional)
 
 ## Room (object)
 
@@ -819,6 +818,8 @@ The parameters that are needed to be sent for this type of authentication are as
 
 
 ### Properties
++ reservationId: 12214089 (number, optional) if update reservation
++ commissionId: 12838326 (number, optional) if update reservation
 + `roomId`: `618286` (number, optional) 
 + `from`: `2019-06-27T10:59:00Z` (string, optional) 
 + `to`: `2019-06-27T10:59:00Z` (string, optional) 
