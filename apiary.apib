@@ -401,7 +401,7 @@ The parameters that are needed to be sent for this type of authentication are as
     + Attributes (Error)
 
 
-### Create reservation [POST]
+### Create/Update reservation [POST]
 
 + Request (application/json)
     + Headers
@@ -685,7 +685,12 @@ The parameters that are needed to be sent for this type of authentication are as
 + name: accomodation (string, optional) 
 + price: 1000 (number, optional) - Price with VAT per unit
 + quantity: 1 (number, optional) 
-+ vatRate: 15 (number, optional) 
++ vatRate: 15 (number, optional)
++ stockId: 256889
++ packageId: null
++ serviceId: null
++ currencyId: 1
++ exchangeRate: 1
 
 
 ## Authentication (object)
