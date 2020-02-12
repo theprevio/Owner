@@ -401,7 +401,7 @@ The parameters that are needed to be sent for this type of authentication are as
     + Attributes (Error)
 
 
-### Create/Update reservation [POST]
+### Create reservation [POST]
 
 + Request (application/json)
     + Headers
@@ -410,6 +410,61 @@ The parameters that are needed to be sent for this type of authentication are as
             X-Previo-App-ID: 4 (Application id. X-Previo-App-ID for Owner system is 4.)
             Authorization: (Authorization by access token)
             
+
+    + Attributes (CreateReservation)
+
+
+
++ Response 200 (application/json)
+
+        The room is free
+
+    + Attributes (array[SuccessfulRequest])
+
+
+
++ Response 400 (application/json)
+
+        Authentication token does not exist
+
+    + Attributes (Error)
+
+
+
++ Response 401 (application/json)
+
+        Authentication token expired
+
+    + Attributes (Error)
+
+
+
++ Response 406 (application/json)
+
+        The room is occupied
+
+    + Attributes (Error)
+
+
+
++ Response 500 (application/json)
+
+        Error occured
+
+    + Attributes (Error)
+
+### Update reservation [PUT]
+
++ Request (application/json)
+    + Headers
+
+            X-Previo-Hotel-Id: 730111 (Hotel ID in PMS)
+            X-Previo-App-ID: 4 (Application id. X-Previo-App-ID for Owner system is 4.)
+            Authorization: (Authorization by access token)
+    
+    + Parameters
+        + reservationId (number, required)
+        + commissionId (number, required)
 
     + Attributes (CreateReservation)
 
@@ -818,12 +873,11 @@ The parameters that are needed to be sent for this type of authentication are as
 
 
 ### Properties
-+ reservationId: 12214089 (number, optional) if update reservation
-+ commissionId: 12838326 (number, optional) if update reservation
 + `roomId`: `618286` (number, optional) 
 + `from`: `2019-06-27T10:59:00Z` (string, optional) 
 + `to`: `2019-06-27T10:59:00Z` (string, optional) 
-+ `ownerId`: `691968` (number, optional) 
++ `ownerId`: `691968` (number, optional)
++ stateId: 2 (number, optional)
 
 
 ## SuccessfulRequest (object)
