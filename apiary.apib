@@ -453,7 +453,7 @@ The parameters that are needed to be sent for this type of authentication are as
 
     + Attributes (Error)
 
-### Update reservation [PUT/{?reservationId, commissionId}]
+### Update reservation [PUT /reservation{?reservationId, ?commissionId}]
 
 + Request (application/json)
     + Headers
@@ -462,11 +462,11 @@ The parameters that are needed to be sent for this type of authentication are as
             X-Previo-App-ID: 4 (Application id. X-Previo-App-ID for Owner system is 4.)
             Authorization: (Authorization by access token)
     
-    + Parameters
-        + reservationId (number, required)
-        + commissionId (number, required)
++ Parameters
+    + reservationId (number, required)
+    + commissionId (number, required)
 
-    + Attributes (CreateReservation)
++ Attributes (CreateReservation)
 
 
 
